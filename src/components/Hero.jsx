@@ -22,8 +22,9 @@ function Hero() {
             </Link>
 
 
-
+          <Link to="/trackjob">
            <button className="secondary-btn">Track Jobs</button>
+           </Link>
         </div>
 
       </div>

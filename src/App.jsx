@@ -7,6 +7,8 @@ import About from './pages/About'
 import Feature from './pages/Feature'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Register from './pages/Register'
+import TrackJob from './pages/TrackJob'
 
 
 
@@ -19,9 +21,11 @@ const App =()=> {
     <Routes>
        <Route path='/' element={<Home/>}></Route>
        <Route path='/about' element={<About/>}></Route>
+       <Route path='register' element={<Register/>}></Route>
        <Route path='/feature' element={<Feature/>}></Route>
        <Route path='/log' element={<Login/>}></Route>
-        <Route path='/dashboard' element={<Dashboard/>}></Route>
+      <Route path='/dashboard' element={<Dashboard/>}></Route>
+      <Route path='/trackjob' element={<TrackJob/>}></Route>
         
     </Routes>
     

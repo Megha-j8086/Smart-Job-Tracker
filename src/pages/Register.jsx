@@ -1,34 +1,37 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Signup() {
 
-  const navigate = useNavigate();   
-
-  
+  const navigate = useNavigate();
+ 
+  const [name,setName] =useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
-  const handleLogin = () => {
+  const handleSignup = () => {
 
-   
-    if(!email || !password ){
+  
+    const user = { name,email, password };
 
-      alert("Please fill all fields");
-      return;
-      
+    
 
-    } 
-    navigate("/dashboard",{
-      state:{username:email}
-    }); 
+    alert("Account Created ");
+
+    navigate("/log"); // go to login after signup
   };
 
   return (
     <div className="auth-container">
     <div className="auth-box">
-      <h2>Login</h2>
+      <h2>Signup</h2>
+
+      <input
+        type="text"
+        placeholder="Name"
+        onChange={(e)=>setName(e.target.value)}
+      />
 
       <input
         type="email"
@@ -42,16 +45,16 @@ function Login() {
         onChange={(e)=>setPassword(e.target.value)}
       />
 
-      <button className="auth-btn" onClick={handleLogin}>
-        Login
+      <button className="auth-btn" onClick={handleSignup}>
+        Signup
       </button>
       <p className="switch-auth">
-       Don't have an account? 
-      <span onClick={()=>navigate("/register")}> Signup </span>
-        </p>
+     Already have an account? 
+     <span onClick={()=>navigate("/log")}> Login</span>
+    </p>
     </div>
     </div>
   );
 }
 
-export default Login;
+export default Signup;

@@ -1,171 +1,258 @@
-import React, { useState } from "react"
-import JobCard from "./JobCard"
+import React, { useState } from "react";
 
 
-function Dashboard(){
-
- const [jobs,setJobs] = useState([
-   {
-    id:1,
-    company:"Google",
-    role:"Software Engineer",
-    status:"Applied",
-    date:"Mar 12"
-   },
-   {
-    id:2,
-    company:"Amazon",
-    role:"Frontend Developer",
-    status:"Interview",
-    date:"Mar 10"
-   }
- ])
-
- const [formOpen,setFormOpen] = useState(false)
- const [selectedJob,setSelectedJob] = useState(null)
-
- const [company,setCompany] = useState("")
- const [role,setRole] = useState("")
- const [status,setStatus] = useState("")
-
- const handleSubmit = ()=>{
-
-  const newJob={
-    id:Date.now(),
-    company,
-    role,
-    status
-  }
-
-  setJobs([...jobs,newJob])
-
-  setCompany("")
-  setRole("")
-  setStatus("")
-  setFormOpen(false)
-
- }
-
- const handleDelete=(id)=>{
-  setJobs(jobs.filter(job=>job.id !== id))
- }
-
- return(
-
-  <div className="dashboard">
-
-   <h1>Job Tracker Dashboard</h1>
-
-   {/* Stats */}
-
-   <div className="stats">
-
-     <div className="card">Applications: {jobs.length}</div>
-
-     <div className="card">
-       Interviews: {jobs.filter(j=>j.status==="Interview").length}
-     </div>
-
-     <div className="card">
-       Offers: {jobs.filter(j=>j.status==="Offer").length}
-     </div>
-
-     <div className="card">
-       Rejected: {jobs.filter(j=>j.status==="Rejected").length}
-     </div>
-
-   </div>
-
-   {/* Add Button */}
-
-   <button
-   className="add-btn"
-   onClick={()=>setFormOpen(true)}
-   >
-   + Add Job
-   </button>
-
-   {/* Job Cards */}
-
-   <div className="jobs-grid">
-
-    {jobs.map((job)=>(
-      <JobCard
-        key={job.id}
-        job={job}
-        onView={()=>setSelectedJob(job)}
-        onDelete={()=>handleDelete(job.id)}
-      />
-    ))}
-
-   </div>
+function Dashboard() {
 
 
-   {/* View Popup */}
+  const [user, setUser] = useState({
+    name: "Megha",
+    email: "john@gmail.com",
+    phone: "",
+    skills: [],
+    experience: "",
+    resume: null
 
-   {selectedJob && (
+  });
 
-    <div className="popup">
+  const [editMode, setEditMode] = useState(false);
 
-      <h3>{selectedJob.company}</h3>
-      <p>Role: {selectedJob.role}</p>
-      <p>Status: {selectedJob.status}</p>
 
-      <button className="close-btn" onClick={()=>setSelectedJob(null)}>
-        Close
-      </button>
+  const [search, setSearch] = useState("");
+
+  const [jobs] = useState([
+    { id: 1, title: "Frontend Developer", company: "Google", skill: "React", exp: 1 },
+    { id: 2, title: "Backend Developer", company: "Amazon", skill: "Django", exp: 2 },
+    { id: 3, title: "UI/UX Designer", company: "Meta", skill: "UI/UX", exp: 0 },
+    { id: 4, title: "Python FullStack Developer", company: "Wipro", skill: "Django", exp: 2 },
+    { id: 5, title: "Data Analyst", company: "Wipro", skill: "python", exp: 0 },
+    { id: 6, title: "Content Creater", company: "TCS", skill: "Adobe", exp: 0 },
+    { id: 7, title: "Mern Stack Developer", company: "Infosys", skill: "MondoDB", exp: 3 },
+    { id: 8, title: "Software Engineer", company: "IBM", skill: "c#", exp: 5 },
+  ]);
+
+
+  const skillsList = [
+    "React",
+    "Django",
+    "Python",
+    "Java",
+    "UI/UX",
+    "Node.js",
+    "SQL",
+    "HTML",
+    "CSS",
+    "JavaScript"
+
+  ];
+
+
+  const [appliedJobs, setAppliedJobs] = useState([]);
+
+
+  const filteredJobs = jobs.filter((job) =>
+    job.title.toLowerCase().includes(search.toLowerCase())
+  );
+  const matchedJobs = jobs.filter((job) => {
+    return (
+      user.skills.includes(job.skill) &&
+      Number(user.experience) >= job.exp
+    );
+  });
+  const handleApply = (job) => {
+
+
+    const alreadyApplied = appliedJobs.find(j => j.id === job.id);
+
+    if (alreadyApplied) {
+      alert("Already Applied ❗");
+      return;
+    }
+
+    setAppliedJobs([
+      ...appliedJobs,
+      { ...job, status: "Applied" }
+    ]);
+  };
+
+
+  const handleSave = () => {
+    setEditMode(false);
+  };
+
+
+  const totalApplications = appliedJobs.length;
+  const interviews = appliedJobs.filter(j => j.status === "Interview").length;
+  const offers = appliedJobs.filter(j => j.status === "Offer").length;
+
+  const handleSkillChange = (skill) => {
+    if (user.skills.includes(skill)) {
+      setUser({
+        ...user,
+        skills: user.skills.filter((s) => s !== skill)
+      });
+    } else {
+      setUser({
+        ...user,
+        skills: [...user.skills, skill]
+      });
+    }
+  };
+
+  return (
+    <div className="dashboard">
+
+
+      <h1>Welcome, {user.name} 👋</h1>
+
+
+      <div className="stats">
+        <div className="card">Applications <h2>{totalApplications}</h2></div>
+        <div className="card">Interviews <h2>{interviews}</h2></div>
+        <div className="card">Offers <h2>{offers}</h2></div>
+      </div>
+
+      <div className="main-grid">
+
+        <div className="profile-card">
+
+          {editMode ? (
+            <>
+              <label>Name</label>
+              <input
+                value={user.name}
+                onChange={(e) => setUser({ ...user, name: e.target.value })}
+              />
+              <label >Email </label>
+              <input
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+              />
+              <label >Phone Number</label>
+              <input
+                value={user.phone}
+                onChange={(e) => setUser({ ...user, phone: e.target.value })}
+              />
+              <div className="skills-box">
+                <label>Skills</label>
+
+                {skillsList.map((skill, index) => (
+                  <div key={index} className="checkbox-item">
+                    <input
+                      type="checkbox"
+                      checked={user.skills.includes(skill)}
+                      onChange={() => handleSkillChange(skill)}
+                    />
+                    <span>{skill}</span>
+                  </div>
+                ))}
+              </div>
+              <label>Experience</label>
+              <input
+                type="number"
+                placeholder="Years of experience"
+                value={user.experience}
+                onChange={(e) => setUser({ ...user, experience: e.target.value })}
+              />
+              <label>Upload File</label>
+              <input
+                type="file"
+                onChange={(e) => setUser({ ...user, resume: e.target.files[0] })}
+              />
+              <button onClick={() => setEditMode(false)}>Save</button>
+
+
+
+            </>
+          ) : (
+            <>
+              <h3>{user.name}</h3>
+              <p>{user.email}</p>
+              <p>Skills: {user.skills}</p>
+              <p>Experience: {user.experience} years</p>
+
+              {user.resume && <p> {user.resume.name}</p>}
+
+              <button onClick={() => setEditMode(true)}>Edit Profile</button>
+            </>
+          )}
+
+        </div>
+
+
+        <div className="right-section">
+
+
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search jobs..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button onClick={() => alert("Searching...")}>Search</button>
+          </div>
+
+
+          <div className="job-section">
+
+
+            <div className="job-section">
+              <h3> Matched Jobs</h3>
+
+              {matchedJobs.length === 0 ? (
+                <p>No matching jobs</p>
+              ) : (
+                matchedJobs.map((job) => (
+                  <div className="job-card" key={job.id}>
+                    <div>
+                      <h4>{job.title}</h4>
+                      <p>{job.company}</p>
+                    </div>
+
+                    <div>
+                      <p>Skill Match: {job.skill}</p>
+                      <button
+                        className="apply-btn"
+                        onClick={() => handleApply(job)}
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+
+          <div className="job-section">
+            <h3>Applied Jobs</h3>
+
+            {appliedJobs.length === 0 ? (
+              <p>No applications yet</p>
+            ) : (
+              appliedJobs.map((job) => (
+                <div className="job-card" key={job.id}>
+                  <div>
+                    <h4>{job.title}</h4>
+                    <p>{job.company}</p>
+                  </div>
+
+                  <div>
+                    <span className="status applied">
+                      {job.status}
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+        </div>
+      </div>
 
     </div>
-
-   )}
-
-
-   {/* Add Job Form */}
-
-   {formOpen && (
-
-    <div className="popup">
-
-     <h3>Add Job</h3>
-
-     <input
-     placeholder="Company"
-     value={company}
-     onChange={(e)=>setCompany(e.target.value)}
-     />
-
-     <input
-     placeholder="Role"
-     value={role}
-     onChange={(e)=>setRole(e.target.value)}
-     />
-
-     <select
-     value={status}
-     onChange={(e)=>setStatus(e.target.value)}
-     >
-       <option>Applied</option>
-       <option>Interview</option>
-       <option>Offer</option>
-       <option>Rejected</option>
-     </select>
-
-     <button className="save-btn" onClick={handleSubmit}>
-       Save Job
-     </button>
-
-     <button className="cancel-btn"onClick={()=>setFormOpen(false)}>
-       Cancel
-     </button>
-
-    </div>
-
-   )}
-
-  </div>
-
- )
-
+  );
 }
 
-export default Dashboard
+export default Dashboard;

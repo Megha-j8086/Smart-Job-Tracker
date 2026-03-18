@@ -1,19 +1,32 @@
 import React from 'react'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Features from './components/Features'
-import Cta from './components/Cta'
 import Footer from './components/Footer'
-import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import About from './pages/About'
+import Feature from './pages/Feature'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
 
-function App() {
+
+
+
+const App =()=> {
   return (
     <>
     <Navbar/>
-    <Hero/>
-    <Features/>
-    <Cta/>
+
+    <Routes>
+       <Route path='/' element={<Home/>}></Route>
+       <Route path='/about' element={<About/>}></Route>
+       <Route path='/feature' element={<Feature/>}></Route>
+       <Route path='/log' element={<Login/>}></Route>
+        <Route path='/dashboard' element={<Dashboard/>}></Route>
+        
+    </Routes>
+    
     <Footer/> 
+   
     </>
   )
 }

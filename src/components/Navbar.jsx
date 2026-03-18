@@ -1,31 +1,21 @@
 import React from 'react'
-import logo from '../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
   return (
-    <nav className='navbar'>
-      <div className='container'>
-        <div className="nav-container">
+     <nav className="navbar">
+      <h2 className="logo">SMARTJOB TRACKER</h2>
 
-          <div className="logo">
-            <div className="logo-img">
-              <img src={logo} alt="logo" />
-            </div>
-            <h2>Smart Job Tracker</h2>
-          </div>
-
-        </div>
-      </div>
-
-      <ul className='nav-links'>
-        <li>Features</li>
-        <li>How it works</li>
-        <li>Login</li>
-        <li>About</li>
+      <ul className="nav-links">
+        <li> <Link to="/">Home</Link></li>
+        <li> <Link to="/dashboard">Dashbaord</Link></li>
+        <li> <Link to="/feature">Features</Link></li>
+    
+        <li> <Link to="/about">About Us</Link></li>
       </ul>
-
-     
-
+      <Link to="/log">
+      <button className="login-btn">Log In</button>
+      </Link>
     </nav>
   )
 }

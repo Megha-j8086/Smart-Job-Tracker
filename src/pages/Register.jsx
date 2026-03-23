@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup({setRegisteredUser}) {
 
   const navigate = useNavigate();
  
@@ -11,12 +11,14 @@ function Signup() {
   
 
   const handleSignup = () => {
+ 
+      if (!email || !password) {
+      alert("Fill all fields");
+      return;
+    }
 
+    setRegisteredUser({name,email,password})
   
-    const user = { name,email, password };
-
-    
-
     alert("Account Created ");
 
     navigate("/log"); // go to login after signup
@@ -48,10 +50,7 @@ function Signup() {
       <button className="auth-btn" onClick={handleSignup}>
         Signup
       </button>
-      <p className="switch-auth">
-     Already have an account? 
-     <span onClick={()=>navigate("/log")}> Login</span>
-    </p>
+     
     </div>
     </div>
   );

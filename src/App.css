@@ -720,13 +720,16 @@ footer{
   height:16px;
   
 }
+
+
 .apply-btn{
   padding:10px 20px;
-  background:#ff2e88;
+  background:#f0277e;
   border:none;
   color:white;
   border-radius:5px;
 }
+
 /* Job Section */
 .job-section{
   margin-bottom:20px;
@@ -766,7 +769,26 @@ footer{
   background:#2196f3;
 }
 
+.not-match {
+  color: #ff6a6a;
+  font-size: 14px;
+}
 
+.job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #1e1e2f;
+  border-radius: 10px;
+}
+
+/* Optional highlight */
+
+.job-section h3 {
+  margin-bottom: 15px;
+}
 
 
 

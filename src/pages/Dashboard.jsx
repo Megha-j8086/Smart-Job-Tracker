@@ -28,6 +28,8 @@ function Dashboard() {
     { id: 6, title: "Content Creater", company: "TCS", skill: "Adobe", exp: 0 },
     { id: 7, title: "Mern Stack Developer", company: "Infosys", skill: "MondoDB", exp: 3 },
     { id: 8, title: "Software Engineer", company: "IBM", skill: "c#", exp: 5 },
+    { id: 9, title: "Python Developer", company: "IBM", skill: "python", exp: 1 },
+    { id: 10, title: "Software Engineer", company: "TCS", skill: "C#", exp: 6 },
   ]);
 
 
@@ -48,16 +50,24 @@ function Dashboard() {
 
   const [appliedJobs, setAppliedJobs] = useState([]);
 
-
   const filteredJobs = jobs.filter((job) =>
-    job.title.toLowerCase().includes(search.toLowerCase())
+    job.title.toLowerCase().includes(search.toLowerCase()) ||
+    job.skill.toLowerCase().includes(search.toLowerCase()) ||
+    job.company.toLowerCase().includes(search.toLowerCase())
   );
+
   const matchedJobs = jobs.filter((job) => {
     return (
-      user.skills.includes(job.skill) &&
+      user.skills.map(s => s.toLowerCase()).includes(job.skill.toLowerCase()) &&
       Number(user.experience) >= job.exp
     );
   });
+ const otherJobs = jobs.filter((job) => {
+  return !user.skills
+    .map(s => s.toLowerCase())
+    .includes(job.skill);
+});
+
   const handleApply = (job) => {
 
 
@@ -102,7 +112,7 @@ function Dashboard() {
     <div className="dashboard">
 
 
-      <h1>Welcome, {user.name} 👋</h1>
+      <h1>Welcome, {user.name} </h1>
 
 
       <div className="stats">
@@ -167,7 +177,7 @@ function Dashboard() {
             <>
               <h3>{user.name}</h3>
               <p>{user.email}</p>
-              <p>Skills: {user.skills}</p>
+              <p>Skills: {user.skills.join(",")}</p>
               <p>Experience: {user.experience} years</p>
 
               {user.resume && <p> {user.resume.name}</p>}
@@ -189,20 +199,72 @@ function Dashboard() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button onClick={() => alert("Searching...")}>Search</button>
+            <button onClick={() => console.log(filteredJobs)}>Search</button>
           </div>
 
 
           <div className="job-section">
+            {search !== "" && (
+              <div className="job-section">
+                <h3>Search Results</h3>
+
+                {filteredJobs.length === 0 ? (
+                  <p>No jobs found</p>
+                ) : (
+                  filteredJobs.map((job) => (
+                    <div className="job-card" key={job.id}>
+                      <div>
+                        <h4>{job.title}</h4>
+                        <p>{job.company}</p>
+                      </div>
+
+                      <div>
+                        <p>Skill: {job.skill}</p>
+                        <button  className="btn"
+                          onClick={() => handleApply(job)}>
+                        
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            {search === "" && (
+              <div className="job-section">
+                <h3>Matched Jobs</h3>
+
+                {matchedJobs.length === 0 ? (
+                  <p>No matching jobs</p>
+                ) : (
+                  matchedJobs.map((job) => (
+                    <div className="job-card" key={job.id}>
+                      <div>
+                        <h4>{job.title}</h4>
+                        <p>{job.company}</p>
+                      </div>
+
+                      <div>
+                        <p>Skill Match: {job.skill}</p>
+                        <button onClick={() => handleApply(job)}>Apply</button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
 
 
             <div className="job-section">
-              <h3> Matched Jobs</h3>
+              <h3>Other Jobs</h3>
 
-              {matchedJobs.length === 0 ? (
-                <p>No matching jobs</p>
+              {otherJobs.length === 0 ? (
+                <p>No other jobs available</p>
               ) : (
-                matchedJobs.map((job) => (
+                otherJobs.map((job) => (
                   <div className="job-card" key={job.id}>
                     <div>
                       <h4>{job.title}</h4>
@@ -210,49 +272,50 @@ function Dashboard() {
                     </div>
 
                     <div>
-                      <p>Skill Match: {job.skill}</p>
+                      <p className="not-match">Skill Required: {job.skill}</p>
                       <button
                         className="apply-btn"
                         onClick={() => handleApply(job)}
                       >
-                        Apply
+                        Apply Anyway
                       </button>
                     </div>
                   </div>
                 ))
               )}
             </div>
-          </div>
 
 
-          <div className="job-section">
-            <h3>Applied Jobs</h3>
+            <div className="job-section">
+              <h3>Applied Jobs</h3>
 
-            {appliedJobs.length === 0 ? (
-              <p>No applications yet</p>
-            ) : (
-              appliedJobs.map((job) => (
-                <div className="job-card" key={job.id}>
-                  <div>
-                    <h4>{job.title}</h4>
-                    <p>{job.company}</p>
+              {appliedJobs.length === 0 ? (
+                <p>No applications yet</p>
+              ) : (
+                appliedJobs.map((job) => (
+                  <div className="job-card" key={job.id}>
+                    <div>
+                      <h4>{job.title}</h4>
+                      <p>{job.company}</p>
+                    </div>
+
+                    <div>
+                      <span className="status applied">
+                        {job.status}
+                      </span>
+                    </div>
                   </div>
+                ))
+              )}
+            </div>
 
-                  <div>
-                    <span className="status applied">
-                      {job.status}
-                    </span>
-                  </div>
-                </div>
-              ))
-            )}
           </div>
-
         </div>
-      </div>
 
-    </div>
-  );
+      </div>
+      </div>
+      );
+    
 }
 
-export default Dashboard;
+      export default Dashboard;

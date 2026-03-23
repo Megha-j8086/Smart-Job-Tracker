@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({registeredUser}) {
 
   const navigate = useNavigate();   
 
@@ -11,20 +11,24 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-
-   
-    if(!email || !password ){
-
-      alert("Please fill all fields");
+       if (!registeredUser) {
+      alert("No account found. Please Sign Up");
+      navigate("/register");
       return;
-      
+    }
 
-    } 
-    navigate("/dashboard",{
-      state:{username:email}
-    }); 
+    if (
+      email !== registeredUser.email ||
+      password !== registeredUser.password
+    ) {
+      alert("Invalid credentials. Please Sign Up");
+      navigate("/register");
+      return;
+    }
+    alert("Login Successful");
+    navigate("/dashboard");
   };
-
+  
   return (
     <div className="auth-container">
     <div className="auth-box">
@@ -45,10 +49,6 @@ function Login() {
       <button className="auth-btn" onClick={handleLogin}>
         Login
       </button>
-      <p className="switch-auth">
-       Don't have an account? 
-      <span onClick={()=>navigate("/register")}> Signup </span>
-        </p>
     </div>
     </div>
   );

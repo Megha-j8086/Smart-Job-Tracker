@@ -122,7 +122,7 @@
   margin-bottom:60px;
 }
 
-/* Cards container */
+
 
 .feature-cards{
   display:flex;
@@ -132,7 +132,7 @@
   
 }
 
-/* Card design */
+
 
 .feature-card{
   width:280px;
@@ -157,21 +157,19 @@
   font-size:40px;
   margin-bottom:15px;
 }
-/* title */
+
 
 .card h3{
   color:#ff2e88;
   margin-bottom:10px;
 }
 
-/* text */
+
 
 .card p{
   font-size:15px;
   color:black;
 }
-
-/* hover animation */
 
 .card:hover{
   transform:translateY(-15px) scale(1.03);
@@ -200,14 +198,14 @@
   color:white;
 }
 
-/* Heading */
+
 
 .cta h2{
   font-size:40px;
   margin-bottom:15px;
 }
 
-/* Paragraph */
+
 
 .cta p{
   font-size:18px;
@@ -215,7 +213,7 @@
   margin-bottom:30px;
 }
 
-/* Button */
+
 
 .cta button{
   background:linear-gradient(90deg,#e0317d,#e65e35);
@@ -229,16 +227,12 @@
   transition:all 0.3s ease;
 }
 
-/* Button hover */
+
 
 .cta button:hover{
   transform:scale(1.05);
   box-shadow:0 0 20px rgba(255,46,136,0.6);
 }
-/* 
-footer{
-  margin-top:10px;
-} */
 
 .footer{
   text-align:center;
@@ -274,7 +268,7 @@ footer{
   margin-bottom:60px;
 }
 
-/* Cards */
+
 
 .about-cards{
   display:flex;
@@ -303,14 +297,14 @@ footer{
   font-size:15px;
 }
 
-/* Hover */
+
 
 .about-card:hover{
   transform:translateY(-10px);
   box-shadow:0 0 25px rgba(255,46,136,0.4);
 }
 
-/* AUTH PAGE */
+
 
 .auth-container{
   height:100vh;
@@ -319,7 +313,7 @@ footer{
   justify-content:center;
 }
 
-/* Auth box */
+
 
 .auth-box{
   width:380px;
@@ -335,14 +329,14 @@ footer{
   text-align:center;
 }
 
-/* Heading */
+
 
 .auth-box h2{
   color:white;
   margin-bottom:25px;
 }
 
-/* Inputs */
+
 
 .auth-box input{
   width:100%;
@@ -356,7 +350,7 @@ footer{
   color:white;
 }
 
-/* Button */
+
 
 .auth-btn{
   width:100%;
@@ -377,7 +371,6 @@ footer{
   box-shadow:0 0 20px rgba(255,46,136,0.6);
 }
 
-/* Switch text */
 
 .switch-auth{
   margin-top:15px;
@@ -395,7 +388,7 @@ footer{
  color:white;
 }
 
-/* Stats */
+
 
 .stats{
  display:flex;
@@ -410,7 +403,7 @@ footer{
  flex:1;
 }
 
-/* Add Button */
+
 
 .add-btn{
  margin-bottom:30px;
@@ -422,7 +415,7 @@ footer{
  cursor:pointer;
 }
 
-/* Job Cards */
+
 
 .jobs-grid{
  display:grid;
@@ -443,7 +436,7 @@ footer{
  font-size:12px;
 }
 
-/* Popup */
+
 
 .popup{
   position: fixed;
@@ -531,13 +524,12 @@ footer{
   );
 }
 
-/* Heading */
+
 .track-job h1{
   font-size:42px;
   margin-bottom:20px;
 }
 
-/* Paragraph */
 .track-job p{
   font-size:18px;
   color:#cfcfe8;
@@ -545,7 +537,7 @@ footer{
   margin:0 auto 50px;
 }
 
-/* Card */
+
 .track-card{
   max-width:400px;
   margin:auto;
@@ -563,13 +555,12 @@ footer{
   transition:all 0.3s ease;
 }
 
-/* Hover */
+
 .track-card:hover{
   transform:translateY(-10px) scale(1.03);
   box-shadow:0 0 40px rgba(255,46,136,0.6);
 }
 
-/* Card text */
 .track-card h3{
   margin-bottom:10px;
   color:#ff2e88;
@@ -580,7 +571,7 @@ footer{
   margin-bottom:20px;
 }
 
-/* Button */
+
 .track-card button{
   background:linear-gradient(90deg,#ff2e88,#ff6a3d);
   border:none;
@@ -604,12 +595,12 @@ footer{
   min-height:100vh;
 }
 
-/* Header */
+
 .dashboard h1{
   margin-bottom:20px;
 }
 
-/* Stats */
+
 .stats{
   display:flex;
   gap:20px;
@@ -624,13 +615,13 @@ footer{
   text-align:center;
 }
 
-/* Layout */
+
 .main-grid{
   display:flex;
   gap:20px;
 }
 
-/* Profile */
+
 .profile-card{
   width:250px;
   background:#1b1b2b;
@@ -673,12 +664,12 @@ footer{
   color:black;
 }
 
-/* Right Section */
+
 .right-section{
   flex:1;
 }
 
-/* Search */
+
 .search-box{
   display:flex;
   gap:10px;
@@ -712,7 +703,6 @@ footer{
   cursor:pointer;
 }
 
-/* checkbox style */
 
 .checkbox-item input{
   accent-color:#ff2e88;
@@ -729,13 +719,20 @@ footer{
   color:white;
   border-radius:5px;
 }
+.match-btn{
+  padding:10px 20px;
+  background:#f0277e;
+  border:none;
+  color:white;
+  border-radius:5px;
+}
 
-/* Job Section */
+
 .job-section{
   margin-bottom:20px;
 }
 
-/* Job Card */
+
 .job-card{
   display:flex;
   justify-content:space-between;
@@ -745,12 +742,12 @@ footer{
   margin-bottom:10px;
 }
 
-/* Match */
+
 .match{
   color:#4caf50;
 }
 
-/* Status */
+
 .status{
   padding:5px 10px;
   border-radius:20px;
@@ -784,15 +781,120 @@ footer{
   border-radius: 10px;
 }
 
-/* Optional highlight */
+
 
 .job-section h3 {
   margin-bottom: 15px;
 }
+.delete-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 
+.delete-btn:hover {
+  background: darkred;
+}
 
+.search-box{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
 
+.search-box input{
+  flex:1;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
 
+.search-btn{
+  padding:10px 15px;
+  border:none;
+  background:#6b7280;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.addbtn{
+  background:#7c3aed;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+
+}
+
+.addbtn:hover{
+  background:#5b21b6;
+}
+.btns{
+  background:#ff2e88;
+  color:white;
+  padding: 10px 18px;
+  
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: white;
+}
+
+.statusapplied {
+  background: #3b82f6; /* blue */
+}
+
+.status.interview {
+  background: #f59e0b; /* orange */
+}
+
+.status.offer {
+  background: #10b981; /* green */
+}
+
+.status.rejected {
+  background: #ef4444; /* red */
+}
+.progress-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.progress-bar span {
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: #ddd;
+  font-size: 12px;
+}
+
+.progress-bar .active {
+  background: green;
+  color: white;
+}
+.btn-reject{
+  background:red;
+  color:white;
+  padding: 10px 18px;
+  
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
 
 
 @media (max-width: 768px){

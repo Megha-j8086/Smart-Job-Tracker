@@ -13,13 +13,21 @@ function Dashboard() {
     resume: null
 
   });
+ 
 
   const [editMode, setEditMode] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [newJob, setNewJob] = useState({
+  title: "",
+  company: "",
+  skill: "",
+  exp: ""
+});
 
 
   const [search, setSearch] = useState("");
 
-  const [jobs] = useState([
+  const [jobs, setJobs] = useState([
     { id: 1, title: "Frontend Developer", company: "Google", skill: "React", exp: 1 },
     { id: 2, title: "Backend Developer", company: "Amazon", skill: "Django", exp: 2 },
     { id: 3, title: "UI/UX Designer", company: "Meta", skill: "UI/UX", exp: 0 },
@@ -47,7 +55,13 @@ function Dashboard() {
 
   ];
 
-
+ const updateStatus = (id, newStatus) => {
+  setAppliedJobs((prevJobs) =>
+    prevJobs.map((job)=>
+      job.id === id ? { ...job, status: newStatus } : job
+  )
+  );
+};
   const [appliedJobs, setAppliedJobs] = useState([]);
 
   const filteredJobs = jobs.filter((job) =>
@@ -62,6 +76,7 @@ function Dashboard() {
       Number(user.experience) >= job.exp
     );
   });
+
  const otherJobs = jobs.filter((job) => {
   return !user.skills
     .map(s => s.toLowerCase())
@@ -88,7 +103,7 @@ function Dashboard() {
   const handleSave = () => {
     setEditMode(false);
   };
-
+ 
 
   const totalApplications = appliedJobs.length;
   const interviews = appliedJobs.filter(j => j.status === "Interview").length;
@@ -108,11 +123,44 @@ function Dashboard() {
     }
   };
 
+  const handleDelete = (id)=>{
+    setAppliedJobs(
+      appliedJobs.filter((job)=>job.id!==id)
+    )
+  }
+  const handleAddJob = () => {
+
+  if (!newJob.title || !newJob.company) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const job = {
+    id: Date.now(),
+    title: newJob.title,
+    company: newJob.company,
+    skill: newJob.skill,
+    exp: Number(newJob.exp)
+  };
+
+  setJobs([...jobs, job]);
+
+  // reset form
+  setNewJob({
+    title: "",
+    company: "",
+    skill: "",
+    exp: ""
+  });
+
+  setShowPopup(false);
+};
+  
   return (
     <div className="dashboard">
 
 
-      <h1>Welcome, {user.name} </h1>
+      <h1>Welcome, {user.name || "user"} </h1>
 
 
       <div className="stats">
@@ -187,8 +235,8 @@ function Dashboard() {
           )}
 
         </div>
-
-
+          
+    
         <div className="right-section">
 
 
@@ -200,8 +248,13 @@ function Dashboard() {
               onChange={(e) => setSearch(e.target.value)}
             />
             <button onClick={() => console.log(filteredJobs)}>Search</button>
-          </div>
-
+       
+          <button
+            className="addbtn"
+            onClick={() => setShowPopup(true)}
+          >
+            + Add Job
+          </button>   </div>
 
           <div className="job-section">
             {search !== "" && (
@@ -220,7 +273,7 @@ function Dashboard() {
 
                       <div>
                         <p>Skill: {job.skill}</p>
-                        <button  className="btn"
+                        <button  className="apply-btn"
                           onClick={() => handleApply(job)}>
                         
                           Apply
@@ -248,18 +301,18 @@ function Dashboard() {
 
                       <div>
                         <p>Skill Match: {job.skill}</p>
-                        <button onClick={() => handleApply(job)}>Apply</button>
+                        <button className="match-btn" onClick={() => handleApply(job)}>Apply</button>
                       </div>
                     </div>
                   ))
                 )}
               </div>
             )}
-
+              
 
 
             <div className="job-section">
-              <h3>Other Jobs</h3>
+              <h3>Related  Jobs</h3>
 
               {otherJobs.length === 0 ? (
                 <p>No other jobs available</p>
@@ -284,6 +337,7 @@ function Dashboard() {
                 ))
               )}
             </div>
+            
 
 
             <div className="job-section">
@@ -303,6 +357,30 @@ function Dashboard() {
                       <span className="status applied">
                         {job.status}
                       </span>
+                      <div className="progress-bar">
+                      <span className={job.status === "Applied" ? "active" : ""}>Applied</span>
+                      <span className={job.status === "Interview" ? "active" : ""}>Interview</span>
+                      <span className={job.status === "Offer" ? "active" : ""}>Offer</span>
+                    </div>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(job.id)}
+                        >
+                          Delete
+                          
+                          </button>
+                          {job.status=== "Applied" && (
+                        <button className="btns" onClick={() => updateStatus(job.id, "Interview")}>
+                            Move to Interview
+                          </button> )}
+
+                          {job.status === "Interview" && (
+                          <button className="btns" onClick={() => updateStatus(job.id, "Offer")}>
+                             Offer Received
+                          </button> )}
+                          <button className="btn-reject" onClick={() => updateStatus(job.id, "Rejected")}>
+                          Reject
+                        </button>
                     </div>
                   </div>
                 ))
@@ -313,9 +391,62 @@ function Dashboard() {
         </div>
 
       </div>
+
+       {showPopup && (
+  <div className="popup">
+    <div className="popup-content">
+      <h3>Add New Job</h3>
+
+      <input
+        type="text"
+        placeholder="Job Title"
+        value={newJob.title}
+        onChange={(e) =>
+          setNewJob({ ...newJob, title: e.target.value })
+        }
+      />
+
+      <input
+        type="text"
+        placeholder="Company"
+        value={newJob.company}
+        onChange={(e) =>
+          setNewJob({ ...newJob, company: e.target.value })
+        }
+      />
+
+      <input
+        type="text"
+        placeholder="Skill"
+        value={newJob.skill}
+        onChange={(e) =>
+          setNewJob({ ...newJob, skill: e.target.value })
+        }
+      />
+
+      <input
+        type="number"
+        placeholder="Experience"
+        value={newJob.exp}
+        onChange={(e) =>
+          setNewJob({ ...newJob, exp: e.target.value })
+        }
+      />
+
+      <button className="btns" onClick={handleAddJob}>
+        Save
+      </button>
+
+      <button className="btns" onClick={() => setShowPopup(false)}>
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
       </div>
-      );
     
+      );
+       
 }
 
       export default Dashboard;

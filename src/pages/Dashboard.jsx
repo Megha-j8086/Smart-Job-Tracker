@@ -1,19 +1,30 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 
 function Dashboard() {
-
+const location =useLocation()
+const loggedUser =location.state
 
   const [user, setUser] = useState({
-    name: "Megha",
-    email: "john@gmail.com",
+    name: "",
+    email: "",
     phone: "",
     skills: [],
     experience: "",
     resume: null
 
   });
- 
+ useEffect(() => {
+  if (loggedUser) {
+    setUser((prev) => ({
+      ...prev,
+      name: loggedUser.name,
+      email: loggedUser.email
+    }));
+  }
+}, [loggedUser]);
 
   const [editMode, setEditMode] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -28,18 +39,18 @@ function Dashboard() {
   const [search, setSearch] = useState("");
 
   const [jobs, setJobs] = useState([
-    { id: 1, title: "Frontend Developer", company: "Google", skill: "React", exp: 1 },
-    { id: 2, title: "Backend Developer", company: "Amazon", skill: "Django", exp: 2 },
-    { id: 3, title: "UI/UX Designer", company: "Meta", skill: "UI/UX", exp: 0 },
-    { id: 4, title: "Python FullStack Developer", company: "Wipro", skill: "Django", exp: 2 },
-    { id: 5, title: "Data Analyst", company: "Wipro", skill: "python", exp: 0 },
-    { id: 6, title: "Content Creater", company: "TCS", skill: "Adobe", exp: 0 },
-    { id: 7, title: "Mern Stack Developer", company: "Infosys", skill: "MondoDB", exp: 3 },
-    { id: 8, title: "Software Engineer", company: "IBM", skill: "c#", exp: 5 },
-    { id: 9, title: "Python Developer", company: "IBM", skill: "python", exp: 1 },
-    { id: 10, title: "Software Engineer", company: "TCS", skill: "C#", exp: 6 },
+    { id: 1, title: "Frontend Developer", company: "Google", skill: "React", exp: 1, description: "Build UI using React, work with APIs, improve performance."},
+    { id: 2, title: "Backend Developer", company: "Amazon", skill: "Django", exp: 2 , description: "Develop REST APIs, handle database, ensure security."},
+    { id: 3, title: "UI/UX Designer", company: "Meta", skill: "UI/UX", exp: 0, description: "Develop REST APIs, handle database, ensure security." },
+    { id: 4, title: "Python FullStack Developer", company: "Wipro", skill: "Django", exp: 2 ,description: "Work on frontend and backend using Python and Django."},
+    { id: 5, title: "Data Analyst", company: "Wipro", skill: "python", exp: 0,description: "Work on frontend and backend using Python and Django." },
+    { id: 6, title: "Content Creater", company: "TCS", skill: "Adobe", exp: 0,description: "Analyze data, create reports, and visualize insights." },
+    { id: 7, title: "Mern Stack Developer", company: "Infosys", skill: "MondoDB", exp: 3,  description: "Develop full-stack apps using MongoDB, Express, React, Node." },
+    { id: 8, title: "Software Engineer", company: "IBM", skill: "c#", exp: 5 ,  description: "Develop full-stack apps using MongoDB, Express, React, Node."},
+    { id: 9, title: "Python Developer", company: "IBM", skill: "python", exp: 1,description: "Develop enterprise applications using C# and .NET." },
+    { id: 10, title: "Software Engineer", company: "TCS", skill: "C#", exp: 6,description: "Build backend systems using Python." },
   ]);
-
+   const [selectedJob, setSelectedJob] = useState(null);
 
   const skillsList = [
     "React",
@@ -140,7 +151,8 @@ function Dashboard() {
     title: newJob.title,
     company: newJob.company,
     skill: newJob.skill,
-    exp: Number(newJob.exp)
+    exp: Number(newJob.exp),
+    description:(newJob.description)
   };
 
   setJobs([...jobs, job]);
@@ -150,7 +162,8 @@ function Dashboard() {
     title: "",
     company: "",
     skill: "",
-    exp: ""
+    exp: "",
+    description:""
   });
 
   setShowPopup(false);
@@ -278,8 +291,15 @@ function Dashboard() {
                         
                           Apply
                         </button>
+                        <button  className="view-btn"  onClick={() => setSelectedJob(job)}>
+                                    View
+                                  </button>
+                       
                       </div>
+    
+
                     </div>
+
                   ))
                 )}
               </div>
@@ -293,7 +313,8 @@ function Dashboard() {
                   <p>No matching jobs</p>
                 ) : (
                   matchedJobs.map((job) => (
-                    <div className="job-card" key={job.id}>
+                    <div className="job-card" key={job.id} 
+                    >
                       <div>
                         <h4>{job.title}</h4>
                         <p>{job.company}</p>
@@ -302,7 +323,11 @@ function Dashboard() {
                       <div>
                         <p>Skill Match: {job.skill}</p>
                         <button className="match-btn" onClick={() => handleApply(job)}>Apply</button>
+                        <button className="view-btn" onClick={() => setSelectedJob(job)}>
+                        View
+                      </button>
                       </div>
+                    
                     </div>
                   ))
                 )}
@@ -332,6 +357,10 @@ function Dashboard() {
                       >
                         Apply Anyway
                       </button>
+                     <button className="view-btn"onClick={() => setSelectedJob(job)}>
+                     
+                    View
+                  </button>
                     </div>
                   </div>
                 ))
@@ -391,6 +420,25 @@ function Dashboard() {
         </div>
 
       </div>
+      {selectedJob && (
+    <div className="popup">
+    <div className="popup-content">
+
+      <h2>{selectedJob.title}</h2>
+      <p><b>Company:</b> {selectedJob.company}</p>
+      <p><b>Skill:</b> {selectedJob.skill}</p>
+      <p><b>Experience:</b> {selectedJob.exp} years</p>
+
+      <p><b>Description:</b></p>
+      <p>{selectedJob.description||"No description available for this job."}</p>
+
+      <button className="close-btn" onClick={() => setSelectedJob(null)}>
+        Close
+      </button>
+
+    </div>
+  </div>
+)}
 
        {showPopup && (
   <div className="popup">
@@ -441,7 +489,10 @@ function Dashboard() {
         Cancel
       </button>
     </div>
+  
+    
   </div>
+  
 )}
       </div>
     

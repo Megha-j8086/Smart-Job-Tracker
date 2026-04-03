@@ -1,14 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function TrackJob() {
 
   const navigate = useNavigate();
 
   return (
     <section className="track-job">
+      <div className="track-container">
 
-      
+      <div className="track-content">
       <h1>Track Your Job Applications Easily</h1>
       <h4>Land Your Dream Job</h4>
 
@@ -21,7 +23,7 @@ function TrackJob() {
     
       <div className="track-card">
 
-        <h3>Simple Dashboard</h3>
+        <h3>Start Your Journey</h3>
 
         <p>
           View all your applications in one place, track progress,
@@ -31,7 +33,9 @@ function TrackJob() {
         <button onClick={() => navigate("/log")}>
           Start – It’s Free
         </button>
-
+        </div>
+        </div>
+        
       </div>
 
     </section>

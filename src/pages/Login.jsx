@@ -26,7 +26,12 @@ function Login({registeredUser}) {
       return;
     }
     alert("Login Successful");
-    navigate("/dashboard");
+    navigate("/dashboard" ,{
+      state:{
+        name:registeredUser.name,
+        email:registeredUser.email
+      }
+    });
   };
   
   return (
@@ -49,7 +54,9 @@ function Login({registeredUser}) {
       <button className="auth-btn" onClick={handleLogin}>
         Login
       </button>
+      
     </div>
+   
     </div>
   );
 }

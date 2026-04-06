@@ -396,13 +396,24 @@
  margin-bottom:30px;
 }
 
-.card{
- background:#1e1e2f;
+.card1{
+ background:rgb(98, 0, 255);
  padding:20px;
  border-radius:10px;
  flex:1;
 }
-
+.card2{
+ background:rgb(14, 150, 14);
+ padding:20px;
+ border-radius:10px;
+ flex:1;
+}
+.card3{
+ background:rgb(201, 21, 21);
+ padding:20px;
+ border-radius:10px;
+ flex:1;
+}
 
 
 .add-btn{
@@ -483,13 +494,14 @@
  cursor:pointer;
 }
 .save-btn{
-  margin:30px;
+ 
  padding:12px 20px;
  background:#ff2e88;
  border:none;
  color:white;
  border-radius:8px;
  cursor:pointer;
+ 
 }
 
 .cancel-btn{
@@ -503,7 +515,7 @@
 }
 
 .close-btn{
-    margin:30px;
+margin:30px;
  padding:12px 20px;
  background:#ff2e88;
  border:none;
@@ -855,21 +867,21 @@
   color: white;
 }
 
-.statusapplied {
-  background: #3b82f6; /* blue */
+/* .statusapplied {
+  background: #3b82f6; 
 }
 
 .status.interview {
-  background: #f59e0b; /* orange */
+  background: #f59e0b; 
 }
 
 .status.offer {
-  background: #10b981; /* green */
+  background: #10b981; 
 }
 
 .status.rejected {
-  background: #ef4444; /* red */
-}
+  background: #ef4444; 
+} */
 .progress-bar {
   display: flex;
   gap: 10px;

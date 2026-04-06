@@ -177,9 +177,9 @@ const loggedUser =location.state
 
 
       <div className="stats">
-        <div className="card">Applications <h2>{totalApplications}</h2></div>
-        <div className="card">Interviews <h2>{interviews}</h2></div>
-        <div className="card">Offers <h2>{offers}</h2></div>
+        <div className="card1">Applications <h2>{totalApplications}</h2></div>
+        <div className="card2">Interviews <h2>{interviews}</h2></div>
+        <div className="card3">Offers <h2>{offers}</h2></div>
       </div>
 
       <div className="main-grid">
@@ -442,7 +442,7 @@ const loggedUser =location.state
 
        {showPopup && (
   <div className="popup">
-    <div className="popup-content">
+    <div className="popup-content-view">
       <h3>Add New Job</h3>
 
       <input
